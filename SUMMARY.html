@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>LLM Speedrun Summary</title>
+<style>
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    margin:40px;
+    max-width:900px;
+    line-height:1.6;
+}
+table{
+    border-collapse:collapse;
+    width:100%;
+}
+th,td{
+    border:1px solid #ccc;
+    padding:10px;
+}
+th{
+    background:#f4f4f4;
+}
+code{
+    background:#f0f0f0;
+    padding:2px 5px;
+}
+</style>
+</head>
+
+<body>
+
+<h1>2,000 Step LLM Speedrun Submission</h1>
+
+<h2>Final Result</h2>
+
+<ul>
+<li><b>Best Dev BPB:</b> 2.2612</li>
+<li><b>Total Parameters:</b> 1,340,864</li>
+<li><b>Training Steps:</b> 2000</li>
+<li><b>Framework:</b> PyTorch (CPU)</li>
+</ul>
+
+<h2>Architecture</h2>
+
+<p>
+The final model retains the original Transformer backbone while replacing the
+standard feed-forward network with a SwiGLU block. The optimizer is AdamW with
+cosine learning-rate scheduling, 200-step warmup, weight decay of 0.05 and
+gradient clipping.
+</p>
+
+<h2>Experiments</h2>
+
+<table>
+<tr>
+<th>Run</th>
+<th>Modification</th>
+<th>Dev BPB</th>
+</tr>
+
+<tr>
+<td>1</td>
+<td>Baseline</td>
+<td>2.5101</td>
+</tr>
+
+<tr>
+<td>2</td>
+<td>Larger Transformer</td>
+<td>2.6433</td>
+</tr>
+
+<tr>
+<td>3</td>
+<td>SwiGLU + AdamW + Cosine LR + Warmup</td>
+<td><b>2.2612</b></td>
+</tr>
+
+<tr>
+<td>4</td>
+<td>Xavier Initialization + Parameter Groups</td>
+<td>2.43</td>
+</tr>
+
+</table>
+
+<h2>Key Findings</h2>
+
+<ul>
+<li>Increasing model size under a fixed 2000-step budget reduced performance.</li>
+<li>SwiGLU provided the largest improvement while staying within the parameter budget.</li>
+<li>Optimization quality had a larger impact than increasing model capacity.</li>
+<li>The final checkpoint achieved the lowest development BPB among all tested configurations.</li>
+</ul>
+
+<h2>Human vs AI Contribution</h2>
+
+<p>
+AI assistance was used for discussing optimization ideas, debugging environment
+setup, and reviewing implementation options. The experimental design,
+implementation, execution of training runs, evaluation, comparison of results,
+and final model selection were performed by the author based on measured
+performance.
+</p>
+
+</body>
+</html>
